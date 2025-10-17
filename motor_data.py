@@ -1,8 +1,5 @@
 import math
 
-# 4-pole squirrel-cage induction motors @ 380 V, from Table 14.12
-# Columns: [HP (decimal), kW, Efficiency_percent, PowerFactor, RatedCurrent_A, StartingCurrent_multiple]
-
 motors4P = [
     [0.083, 0.06, 58, 0.74, 0.22, 2.8],
     [0.125, 0.09, 59, 0.74, 0.31, 3.3],

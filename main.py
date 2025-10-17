@@ -41,6 +41,7 @@ def calc_pf(motor_data_obj, motor_list_obj, p_extra):
     return pf
 
 if __name__ == "__main__":
+    
     md = MotorData(motors4P)
     ml = MotorList(motorList1)
 
