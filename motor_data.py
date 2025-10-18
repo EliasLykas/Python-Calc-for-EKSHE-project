@@ -1,3 +1,9 @@
+# This file contains the usefull data about 4-Pole motors form Dr.Dokopoulos book "Oikiakes egkatastasis katanaloton", page.615
+# The form of this data is a list (motor) of lists 
+# (motors data = [motors horse power (HP), motors output power (kW), motor efficiency (%), motors power factor (pf), Nominal Operating Current (A), Starting Current Multiplyer (Is/In)])
+# It also contains usefull funtions to work with this data
+
+
 import math
 
 motors4P = [
@@ -40,11 +46,15 @@ class MotorData:
     def __init__(self, dataset):
         self.dataset = dataset  
 
+# This function returns the motors list given the motors HP 
+
     def find_motor(self, hp):
         
         closest = min(self.dataset, key=lambda x: abs(x[0] - hp))
         return closest
 
+#This Function calculates and returns the active power input (Pin) of the motor or motors given its/theirs HP and quantity [HP, quantity]
+  
     def calc_pin(self, hp, quantity=1):
         
         motor = self.find_motor(hp)
@@ -54,7 +64,9 @@ class MotorData:
         pin_tot = pin * quantity
 
         return pin_tot
-    
+
+#This Function calculates and returns the apparent power input (Qin) of the motor or motors given its/theirs HP and quantity [HP, quantity]
+
     def calc_qin(self, hp, quantity=1):
         
         motor = self.find_motor(hp)

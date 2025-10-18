@@ -1,3 +1,7 @@
+# This file is for the list of motors that they are in the installetion.
+# The form of this data is a list (motor type) of lists (motors horse power, motors quantity)
+# It is made in order to be call by motor_data's functions, where HP and quantity of the motor is needed to calculate the power
+
 motorList1 = [
     [2.00, 6],
     [3.00, 1],
