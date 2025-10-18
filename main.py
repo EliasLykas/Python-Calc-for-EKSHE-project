@@ -5,7 +5,7 @@ from power_calc_functions import *
 if __name__ == "__main__":
     
     md = MotorData(motors4P)
-    ml = MotorList(motorList1)
+    ml = MotorList(motorList)
 
     p_other = [50, 1]
 
