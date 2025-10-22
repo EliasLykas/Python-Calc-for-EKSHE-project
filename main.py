@@ -63,4 +63,4 @@ if __name__ == "__main__":
     pin = scale_factor_calc(pin, 0.1)
 
     print("Taking to consideration a scale factor of 0.1, P_futere =", round(pin, 3), "kW")
-    print("The future power factor of the installation depends on the nature of the future load, and a new compensation might be needed to achieve cosφ = 0.95.\n")
+    print("The future power factor of the installation depends on the nature of the future load,\na new compensation might be needed to achieve cosφ = 0.95.\n")
