@@ -1,6 +1,8 @@
-# This file is for the list of motors that they are in the installetion.
-# The form of this data is a list (motor type) of lists (motors horse power, motors quantity)
-# It is made in order to be call by motor_data's functions, where HP and quantity of the motor is needed to calculate the power
+"""Installed motor list used by the example project.
+
+Each entry is a two-item list: [motor_HP, quantity]. The list is consumed
+by `MotorData` helper functions to compute power per motor type.
+"""
 
 motorList = [
     [2.00, 6],
@@ -57,5 +59,11 @@ motorList = [
 ]
 
 class MotorList:
+    """Simple wrapper class that exposes the installed motor dataset.
+
+    The class stores the provided dataset on `.dataset` so the rest of the
+    code can iterate over installed motor entries as `[hp, quantity]`.
+    """
+
     def __init__(self, dataset):
         self.dataset = dataset

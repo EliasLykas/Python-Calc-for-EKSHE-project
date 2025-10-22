@@ -1,8 +1,13 @@
-# This file contains the usefull data about 4-Pole motors form Dr.Dokopoulos book "Oikiakes egkatastasis katanaloton", page.615
-# The form of this data is a list (motor) of lists 
-# (motors data = [motors horse power (HP), motors output power (kW), motor efficiency (%), motors power factor (pf), Nominal Operating Current (A), Starting Current Multiplyer (Is/In)])
-# It also contains usefull funtions to work with this data
+"""Motor dataset and helper utilities.
 
+This module contains a reference table (`motors4P`) for 4-pole motors taken
+from Dr. Dokopoulos' book (page 615). Each motor row is a list in the form:
+
+    [HP, kW, efficiency_percent, power_factor, nominal_current_A, starting_current_multiplier]
+
+The module also exposes a small `MotorData` helper class that provides simple
+lookups and calculations used by the rest of the example project.
+"""
 
 import math
 
@@ -41,22 +46,34 @@ motors4P = [
     [483.0, 355.00, 96.3, 0.88, 640.00, 7.0],
     [544.0, 400.00, 96.5, 0.88, 720.00, 7.0],
 ]
-
 class MotorData:
-    def __init__(self, dataset):
-        self.dataset = dataset  
+    """Small helper around a list-of-lists dataset.
 
-# This function returns the motors list given the motors HP 
+    The class expects `dataset` to be an iterable of the same shape as
+    `motors4P`. It provides:
+
+    - `find_motor(hp)` — returns the dataset row closest to requested HP
+    - `calc_pin(hp, quantity)` — calculates active input power (kW)
+    - `calc_qin(hp, quantity)` — calculates apparent power (kVA)
+    """
+
+    def __init__(self, dataset):
+        # store the raw dataset (list of [hp, kw, eff, pf, In, Ist])
+        self.dataset = dataset
 
     def find_motor(self, hp):
-        
+        """Return the dataset row whose HP is closest to `hp`.
+
+        Uses absolute difference on the first column (HP).
+        """
         closest = min(self.dataset, key=lambda x: abs(x[0] - hp))
         return closest
 
-#This Function calculates and returns the active power input (Pin) of the motor or motors given its/theirs HP and quantity [HP, quantity]
-  
     def calc_pin(self, hp, quantity=1):
-        
+        """Calculate active input power (Pin) in kW for one motor or `quantity`.
+
+        The formula uses the motor output kW divided by efficiency (percent).
+        """
         motor = self.find_motor(hp)
         HP, kW, eff, pf, In, Ist = motor
 
@@ -65,17 +82,18 @@ class MotorData:
 
         return pin_tot
 
-#This Function calculates and returns the apparent power input (Qin) of the motor or motors given its/theirs HP and quantity [HP, quantity]
-
     def calc_qin(self, hp, quantity=1):
-        
+        """Calculate apparent input power (Qin) in kVA for the motor(s).
+
+        Qin is computed from Pin and the motor power factor using:
+            Qin = Pin * tan(acos(pf))
+        """
         motor = self.find_motor(hp)
         HP, kW, eff, pf, In, Ist = motor
 
         pin = self.calc_pin(hp, 1)
 
         qin_single = pin * math.tan(math.acos(pf))
-        # qin_single = kW * math.tan(math.acos(pf))
 
         qin_tot = qin_single * quantity
 
