@@ -27,15 +27,26 @@ def pf_calc(p, q):
 
     return pf
 
-def q_comp_calc(Pin, Qin):
+def comp_calc(Pin, Qin, pf):
     
     q_comp = 0
-    
-    qin_tot = Pin * math.tan(math.acos(0.95))
 
-    q_comp = qin_tot - Qin
+    if pf_check(pf):
 
-    return q_comp
+        print("No compensation needed.\n")
+
+        return q_comp
+
+    else:  
+        print("calculating compensation....")
+
+        qin_tot = Pin * math.tan(math.acos(0.95))
+
+        q_comp = qin_tot - Qin
+
+        print("Q compensation is", round(q_comp, 3), "kVA\n")
+
+        return q_comp
 
 def sync_factor_calc(Pin, Qin, sf):
 
@@ -43,3 +54,18 @@ def sync_factor_calc(Pin, Qin, sf):
 
     return s_sync
 
+def pf_check(pf):
+
+    if not pf == 0.95:
+        avg_pf = (pf + 0.95) / 2
+        print("cosφ need's to be 0.95")
+        print("so, average cosφ for the installation is", round(avg_pf, 3), "\n")
+        return False
+    else:
+        return True
+
+def scale_factor_calc(pin, scale ):
+
+    scaled_value = pin * (scale + 1)
+
+    return scaled_value

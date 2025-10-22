@@ -75,8 +75,8 @@ class MotorData:
         pin = self.calc_pin(hp, 1)
 
         qin_single = pin * math.tan(math.acos(pf))
-        # qin_single = kw * math.tan(math.acos(pf))
-        
+        # qin_single = kW * math.tan(math.acos(pf))
+
         qin_tot = qin_single * quantity
 
         return qin_tot
