@@ -44,23 +44,30 @@ if __name__ == "__main__":
     print("Taking to consideration the sync factor, Pin =", round(pin, 3), "kW")
     print("Taking to consideration the sync factor, Qin =", round(qin, 3), "kVA")
     print("------------ cosφ =", round(pf, 3),"------------\n")
-
-    # checking power factor, calculating required reactive compensation (if any)
-    q_comp = comp_calc(pin, qin, pf)
-
-    # update total apparent power after compensation (if q_comp != 0)
-    qin = qin + q_comp
-    pf_comp = pf_calc(pin, qin)
-
-    # If compensation was applied, print the new totals and corrected pf
-    if not q_comp == 0:
-        print("Total Pin =", round(pin, 3), "kW")
-        print("Total Qin =", round(qin, 3), "kVA")
-        print("------------ cosφ =", round(pf_comp, 3),"------------\n")
+    
+    pf_avg = pf_check(pf)
 
     # demonstrate the existing scale_factor_calc utility. Note: the
     # project's `scale_factor_calc` expects the base power and a factor.
     pin = scale_factor_calc(pin, 0.1)
 
-    print("Taking to consideration a scale factor of 0.1, P_futere =", round(pin, 3), "kW")
-    print("The future power factor of the installation depends on the nature of the future load,\na new compensation might be needed to achieve cosφ = 0.95.\n")
+    print("Taking to consideration a scale factor of 0.1, P_futere =", round(pin, 3), "kW\n")
+    print("NOTE:The future power factor of the installation depends on the nature of the future load,\na new compensation might be needed to achieve cosφ = 0.95.\n")
+
+
+    s_contraced = s_contraced_calc(pin, pf_avg)
+
+    print("The total contracted power for the future installation should be =", round(s_contraced[0],3), "<", round(s_contraced[1],3),"kVA\n")
+
+    # checking power factor, calculating required reactive compensation (if any)
+    # q_comp = comp_calc(pin, qin, pf)
+
+    # update total apparent power after compensation (if q_comp != 0)
+    # qin = qin + q_comp
+    # pf_comp = pf_calc(pin, qin)
+
+    # If compensation was applied, print the new totals and corrected pf
+    # if not q_comp == 0:
+    #     print("Total Pin =", round(pin, 3), "kW")
+    #     print("Total Qin =", round(qin, 3), "kVA")
+    #     print("------------ cosφ =", round(pf_comp, 3),"------------\n")

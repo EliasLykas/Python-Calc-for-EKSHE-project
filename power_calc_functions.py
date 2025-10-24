@@ -97,7 +97,7 @@ def pf_check(pf):
         avg_pf = (pf + 0.95) / 2
         print("cosφ need's to be 0.95")
         print("so, average cosφ for the installation is", round(avg_pf, 3), "\n")
-        return False
+        return avg_pf
     else:
         return True
 
@@ -112,3 +112,13 @@ def scale_factor_calc(pin, scale):
     scaled_value = pin * (scale + 1)
 
     return scaled_value
+
+def s_contraced_calc(pin, sf_avg):
+    """Calculate the contracted apparent power (S_contracted) for the installation.
+    """
+    
+    s_contracted = pin / sf_avg
+
+    arg_avg = math.acos(sf_avg) * 180 / math.pi
+
+    return [s_contracted, arg_avg]
